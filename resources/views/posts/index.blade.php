@@ -1,7 +1,7 @@
     <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/css/app.css')}}">
     <meta charset="UTF-8">
     <title>Notebook</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">

@@ -1,0 +1,18 @@
+.sidebar{
+  background: #37474F;
+  .sidebar-menu{
+    margin-right: -15px;
+    margin-left: -15px;
+    min-height: 100vh;
+    .sidebar-menu-item{
+      .sidebar-menu-link{
+        border-bottom:1px solid #455A64;
+        color: #CFD8DC;
+        padding: 16px 24px;
+        text-decoration: none;
+        display: flex;
+        flex: 1;
+      }
+    }
+  }
+}
