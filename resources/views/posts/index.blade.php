@@ -11,9 +11,9 @@
     <div class="row">
         <div class="col-3 sidebar">
             <ul class="sidebar-menu list-unstyled">
-                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#1">1</a></li>
+                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#1">Posts</a></li>
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#2">2</a></li>
-                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#3">3</a></li>
+                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#3">Users</a></li>
             </ul>
         </div>
         <div class="col-9">
