@@ -18,7 +18,7 @@
         </div>
         <div class="col-9">
             <h1>All tasks</h1>
-            <a href="/posts/create" class="btn btn-success">Add tasks</a>
+            <a href="{{ route('blog.posts.create') }}" class="btn btn-success">Add tasks</a>
             <br><br>
             <table class="table">
                 <thead>
@@ -34,9 +34,9 @@
                     <td align="center" width="5%">{{$post['id']}}</td>
                     <td ><?=$post['title']?></td>
                     <td class="d-flex justify-content-center align-items-center">
-                        <a href="posts/{{$post['id']}} "><i class="far fa-eye p-0 mr-1"></i></a>
-                        <a href="posts/{{$post['id']}}/edit"><i class="fas fa-pencil-alt p-0 mx-1"></i></a>
-                        <form action="/posts/{{$post['id']}}" method="post">
+                        <a href="{{ route('blog.posts.show',['post'=>$post['id']]) }}"><i class="far fa-eye p-0 mr-1"></i></a>
+                        <a href="{{ route('blog.posts.edit',['post'=>$post['id']]) }}"><i class="fas fa-pencil-alt p-0 mx-1"></i></a>
+                        <form action="{{ route('blog.posts.destroy',['post'=>$post['id']]) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-link p-0 ml-1" type="submit"><i class="fas fa-trash-alt"></i></button>

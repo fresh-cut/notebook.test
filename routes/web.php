@@ -21,4 +21,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::resource('posts', App\Http\Controllers\PostsController::class)->middleware('auth');
+Route::group(['namespace'=>'\App\Http\Controllers\Blog','prefix'=>'blog'], function(){
+    Route::resource('posts', 'PostController')->names('blog.posts')->middleware('auth');
+});

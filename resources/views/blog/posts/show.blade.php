@@ -21,7 +21,7 @@
             <p>
                 {{$post['bodytext']}}
             </p>
-            <a href="/posts">Go to back</a>
+            <a href="{{ route('blog.posts.index') }}">Go to back</a>
         </div>
     </div>
 </div>

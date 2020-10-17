@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Blog;
+
 
 use App\Models\Posts;
+use Faker\Provider\Base;
 use Illuminate\Http\Request;
 
 
-class PostsController extends Controller
+class PostController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +18,8 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Posts::all();
-        return view('posts.index', compact('posts'));
+        //dd($posts);
+        return view('blog.posts.index', compact('posts'));
     }
     /**
      * Show the form for creating a new resource.
@@ -25,7 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('blog.posts.create');
     }
 
     /**
@@ -39,7 +42,7 @@ class PostsController extends Controller
         $post->title=$request->title;
         $post->bodytext=$request->bodytext;
         $post->save();
-        return redirect('/posts');
+        return redirect()->route('blog.posts.index');
     }
 
     /**
@@ -51,7 +54,7 @@ class PostsController extends Controller
     public function show($id)
     {
         $post= Posts::where('id', $id)->first();
-        return view('posts.show', compact('post') );
+        return view('blog.posts.show', compact('post') );
     }
 
     /**
@@ -64,7 +67,7 @@ class PostsController extends Controller
     {
 
         $post= Posts::where('id', $id)->first();
-        return view('posts.edit', ['post'=>$post] );
+        return view('blog.posts.edit', compact('post'));
     }
 
     /**
@@ -80,7 +83,7 @@ class PostsController extends Controller
         $post->title=$request->title;
         $post->bodytext=$request->bodytext;
         $post->save();
-        return redirect('/posts');
+        return redirect()->route('blog.posts.index');
     }
 
     /**
@@ -92,6 +95,7 @@ class PostsController extends Controller
     public function destroy($id)
     {
         Posts::destroy($id);
-        return redirect()->route('posts.index');
+        return redirect()->route('blog.posts.index');
     }
 }
+

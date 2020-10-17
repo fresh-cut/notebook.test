@@ -18,7 +18,7 @@
         </div>
         <div class="col-9">
             <h1>Edit tasks</h1>
-            <form action="/posts/{{$post['id']}}" method="post">
+            <form action="{{ route('blog.posts.update', ['post'=>$post['id']]) }}" method="post">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">

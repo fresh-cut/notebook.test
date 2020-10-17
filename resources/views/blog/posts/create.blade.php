@@ -18,7 +18,7 @@
         </div>
         <div class="col-9">
             <h1>Create tasks</h1>
-            <form action="/posts" method="post">
+            <form action="{{ route('blog.posts.store') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <input type="text" class="form-control" name="title" autocomplete="off" placeholder="напишите название для заметки">
