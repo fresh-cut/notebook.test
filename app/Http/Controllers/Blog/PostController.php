@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Blog;
 
 
-use App\Models\Posts;
+use App\Models\BlogPost;
+
 use Faker\Provider\Base;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $posts = Posts::all();
+        $posts = BlogPost::all();
         //dd($posts);
         return view('blog.posts.index', compact('posts'));
     }
@@ -37,7 +38,7 @@ class PostController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Posts $post)
+    public function store(Request $request, BlogPost $post)
     {
         $post->title=$request->title;
         $post->bodytext=$request->bodytext;
@@ -53,7 +54,7 @@ class PostController extends BaseController
      */
     public function show($id)
     {
-        $post= Posts::where('id', $id)->first();
+        $post= BlogPost::where('id', $id)->first();
         return view('blog.posts.show', compact('post') );
     }
 
@@ -66,7 +67,7 @@ class PostController extends BaseController
     public function edit($id)
     {
 
-        $post= Posts::where('id', $id)->first();
+        $post= BlogPost::where('id', $id)->first();
         return view('blog.posts.edit', compact('post'));
     }
 
@@ -79,7 +80,7 @@ class PostController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $post=Posts::find($id);
+        $post=BlogPost::find($id);
         $post->title=$request->title;
         $post->bodytext=$request->bodytext;
         $post->save();
@@ -94,7 +95,7 @@ class PostController extends BaseController
      */
     public function destroy($id)
     {
-        Posts::destroy($id);
+        BlogPost::destroy($id);
         return redirect()->route('blog.posts.index');
     }
 }

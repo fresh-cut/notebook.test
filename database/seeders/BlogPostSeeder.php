@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class PostsSeeder extends Seeder
+class BlogPostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class PostsSeeder extends Seeder
     {
         for($i=0;$i<10;$i++)
         {
-        DB::table('posts')->insert(
+        DB::table('blog_posts')->insert(
         [
             'title'=>Str::random(10),
             'bodytext'=>Str::random(50),
