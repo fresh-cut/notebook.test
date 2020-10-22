@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Blog\Admin;
 
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends BaseController
 {
@@ -16,7 +17,7 @@ class CategoryController extends BaseController
     {
         $blogCategories=BlogCategory::paginate(6);
        // dd($categories);
-        return view('blog.admin.category.index', compact('blogCategories'));
+        return view('blog.admin.categories.index', compact('blogCategories'));
     }
 
     /**
@@ -53,7 +54,7 @@ class CategoryController extends BaseController
         $blogCategory=BlogCategory::findOrFail($id);
         $categotyList=BlogCategory::all('id', 'title');
         //dd($blogParent);
-        return view('blog.admin.category.edit', compact('blogCategory', 'categotyList'));
+        return view('blog.admin.categories.edit', compact('blogCategory', 'categotyList'));
     }
 
     /**
@@ -65,8 +66,34 @@ class CategoryController extends BaseController
      */
     public function update(Request $request, $id)
     {
-       //dd('update', $request);
-        dd('update');
+        $blogCategory=BlogCategory::find($id);
+        if(empty($blogCategory))
+        {
+            return back()
+                ->withErrors(['msg'=>"Запись id=$id  не найдена"])
+                ->withInput();//вернуть с веденными данными нужна в виде функция old()
+        }
+        $data=$request->all();
+        $result=$blogCategory->fill($data)->save();
+        dd($result);
+        if($result)
+        {
+            return redirect()
+                ->route('blog.admin.categories.edit',$id)
+                ->with(['success'=>'успешно']);
+        }
+        else{
+            return back()
+                ->withErrors(['msg'=>'Ошибка сохранения'])
+                ->withInput();
+        }
+//        $blogCategory->title=$request->title;
+//        $blogCategory->parent_id=$request->parent_id;
+//        $blogCategory->description=$request->description;
+//        $blogCategory->slug=$request->slug;
+//        $blogCategory->save();
+
+
     }
 
 }

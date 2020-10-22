@@ -21,20 +21,33 @@
             <form action="{{ route('blog.admin.categories.update', $blogCategory->id) }}" method="post">
                 @csrf
                 @method('PATCH')
+
+
                 <div class="form-group">
-                    <input type="text" class="form-control" name="title" value="{{$blogCategory->title}}" autocomplete="off">
+                    <label for="title">Заголовок</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{$blogCategory->title}}" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
-                    <select>
-                        @foreach($categotyList as $category)
-                            <option name="parent_id" value="{{$category->id}}">{{$category->title}}</option>
+                    <label for="slug">Идентификатор</label>
+                        <input type="text" class="form-control" id="slug" name="slug" value="{{$blogCategory->slug}}" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="parent_id">Родитель</label>
+                    <select name="parent_id" id="parent_id" class="form-control" required>
+                        @foreach($categotyList as $categoryOption)
+                            <option value="{{$categoryOption->id}}"
+                                @if($blogCategory->parent_id===$categoryOption->id) selected @endif>
+                                {{$categoryOption->title}}
+                            </option>
                          @endforeach
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <textarea name="description" class="form-control">{{$blogCategory->description}}</textarea>
+                    <label for="description">Описание</label>
+                    <textarea name="description" id="description" class="form-control">{{old('description',$blogCategory->description)}}</textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-dark" type="submit">Save</button>
