@@ -31,12 +31,12 @@
                 <tbody>
                 <?php foreach($posts as $post):?>
                 <tr>
-                    <td align="center" width="5%">{{$post['id']}}</td>
-                    <td ><?=$post['title']?></td>
+                    <td align="center" width="5%">{{$post->id}}</td>
+                    <td ><?=$post->title?></td>
                     <td class="d-flex justify-content-center align-items-center">
-                        <a href="{{ route('blog.posts.show',['post'=>$post['id']]) }}"><i class="far fa-eye p-0 mr-1"></i></a>
-                        <a href="{{ route('blog.posts.edit',['post'=>$post['id']]) }}"><i class="fas fa-pencil-alt p-0 mx-1"></i></a>
-                        <form action="{{ route('blog.posts.destroy',['post'=>$post['id']]) }}" method="post">
+                        <a href="{{ route('blog.posts.show', $post->id) }}"><i class="far fa-eye p-0 mr-1"></i></a>
+                        <a href="{{ route('blog.posts.edit', $post->id) }}"><i class="fas fa-pencil-alt p-0 mx-1"></i></a>
+                        <form action="{{ route('blog.posts.destroy', $post->id) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-link p-0 ml-1" type="submit"><i class="fas fa-trash-alt"></i></button>

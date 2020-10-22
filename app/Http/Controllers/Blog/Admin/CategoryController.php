@@ -14,9 +14,9 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $categories=BlogCategory::paginate(2);
+        $blogCategories=BlogCategory::paginate(6);
        // dd($categories);
-        return view('blog.admin.category.index', compact('categories'));
+        return view('blog.admin.category.index', compact('blogCategories'));
     }
 
     /**
@@ -26,7 +26,7 @@ class CategoryController extends BaseController
      */
     public function create()
     {
-        //
+        var_dump('ok');
     }
 
     /**
@@ -49,7 +49,11 @@ class CategoryController extends BaseController
      */
     public function edit($id)
     {
-        //
+        //$blogCategory=BlogCategory::where('id', $id)->first();
+        $blogCategory=BlogCategory::findOrFail($id);
+        $categotyList=BlogCategory::all('id', 'title');
+        //dd($blogParent);
+        return view('blog.admin.category.edit', compact('blogCategory', 'categotyList'));
     }
 
     /**
@@ -61,7 +65,8 @@ class CategoryController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+       //dd('update', $request);
+        dd('update');
     }
 
 }

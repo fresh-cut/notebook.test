@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{asset('css/css/app.css')}}">
     <meta charset="UTF-8">
-    <title>Notebook</title>
+    <title>Categories</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 </head>
 <body>
@@ -18,7 +18,10 @@
         </div>
         <div class="col-9">
             <h1>All categories</h1>
-            <br><br>
+            <nav>
+                <a href="{{ route('blog.admin.categories.create') }}" class="btn btn-success">Add categories</a>
+            </nav>
+            <br>
             <table class="table">
                 <thead>
                 <tr style="text-align: center">
@@ -28,19 +31,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($categories as $categorie):?>
+                @foreach($blogCategories as $blogCategory)
                 <tr>
-
-                   <td align="center">{{$categorie->id}}</td>
-                   <td align="center">{{$categorie['title']}}</td>
-                   <td align="center">{{$categorie['parent_id']}}</td>
+                   <td align="center">{{$blogCategory->id}}</td>
+                   <td align="center">
+                       <a href="{{ route('blog.admin.categories.edit',$blogCategory->id) }}">
+                           {{$blogCategory->title}}
+                       </a>
+                   </td>
+                   <td align="center">{{$blogCategory->parent_id}}</td>
                 </tr>
-                <?php endforeach;?>
-                <tr>
-                    <td>{{$categories->links()}}</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
+            @if($blogCategories->total() > $blogCategories->count() )
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            {{ $blogCategories->links() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+
         </div>
     </div>
 </div>
