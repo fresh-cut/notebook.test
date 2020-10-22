@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\BlogPost;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class BlogPostSeeder extends Seeder
 {
@@ -15,16 +14,6 @@ class BlogPostSeeder extends Seeder
      */
     public function run()
     {
-        for($i=0;$i<10;$i++)
-        {
-        DB::table('blog_posts')->insert(
-        [
-            'title'=>Str::random(10),
-            'bodytext'=>Str::random(50),
-            'created_at'=>now(),
-            'updated_at'=>now()
-        ]
-        );
-        }
+        BlogPost::factory()->count(3)->create();//сколько сделать записей
     }
 }
