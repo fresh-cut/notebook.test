@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends BaseController
 {
@@ -50,7 +53,6 @@ class CategoryController extends BaseController
      */
     public function edit($id)
     {
-        //$blogCategory=BlogCategory::where('id', $id)->first();
         $blogCategory=BlogCategory::findOrFail($id);
         $categotyList=BlogCategory::all('id', 'title');
         //dd($blogParent);
@@ -64,36 +66,26 @@ class CategoryController extends BaseController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BlogCategoryUpdateRequest $request, $id)
     {
         $blogCategory=BlogCategory::find($id);
         if(empty($blogCategory))
         {
             return back()
                 ->withErrors(['msg'=>"Запись id=$id  не найдена"])
-                ->withInput();//вернуть с веденными данными нужна в виде функция old()
+                ->withInput();//вернуть с веденными данными - нужна в виде функция old()
         }
-        $data=$request->all();
-        $result=$blogCategory->fill($data)->save();
-        dd($result);
+         $result=$blogCategory->fill($request->all())->save();//массовое сохранение(присвоение
         if($result)
         {
             return redirect()
                 ->route('blog.admin.categories.edit',$id)
-                ->with(['success'=>'успешно']);
+                ->with(['success'=>'Успешно сохранено']);
         }
         else{
             return back()
                 ->withErrors(['msg'=>'Ошибка сохранения'])
                 ->withInput();
         }
-//        $blogCategory->title=$request->title;
-//        $blogCategory->parent_id=$request->parent_id;
-//        $blogCategory->description=$request->description;
-//        $blogCategory->slug=$request->slug;
-//        $blogCategory->save();
-
-
     }
-
 }

@@ -11,18 +11,37 @@
     <div class="row">
         <div class="col-3 sidebar">
             <ul class="sidebar-menu list-unstyled">
-                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#1">1</a></li>
+                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="{{ route('blog.admin.categories.index') }}">Категории</a></li>
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#2">2</a></li>
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#3">3</a></li>
             </ul>
         </div>
         <div class="col-9">
             <h1>Edit category</h1>
+            @php
+                /** @var \Illuminate\Support\ViewErrorBag $errors */
+            @endphp
+            @if($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{$errors->first()}}
+                    </div>
+            @endif
+            @if(session('success'))
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{session('success')}}
+                    </div>
+            @endif
+
+
             <form action="{{ route('blog.admin.categories.update', $blogCategory->id) }}" method="post">
                 @csrf
                 @method('PATCH')
-
-
                 <div class="form-group">
                     <label for="title">Заголовок</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{$blogCategory->title}}" autocomplete="off" required>
