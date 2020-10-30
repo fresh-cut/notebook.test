@@ -16,7 +16,7 @@ class CreateBlogCategoriesTable extends Migration
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
             $table->integer('parent_id')->unsigned()->default(1);//категория по умолчаниюбез парента
-            $table->string('slug')->unique(); //название категории в транслите, уникальный.по нему будут строится url
+            $table->string('slug')->nullable(); //название категории в транслите, уникальный.по нему будут строится url
             $table->string('title');//название категории
             $table->text('description')->nullable();//описание категории, по умолчанию можно не заполнять
             $table->timestamps();

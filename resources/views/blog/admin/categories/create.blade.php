@@ -17,7 +17,7 @@
             </ul>
         </div>
         <div class="col-9">
-            <h1>Edit category</h1>
+            <h1>Create category</h1>
             @php
                 /** @var \Illuminate\Support\ViewErrorBag $errors */
             @endphp
@@ -39,25 +39,24 @@
             @endif
 
 
-            <form action="{{ route('blog.admin.categories.update', $blogCategory->id) }}" method="post">
+            <form action="{{ route('blog.admin.categories.store') }}" method="post">
                 @csrf
-                @method('PATCH')
+                @method('POST')
                 <div class="form-group">
                     <label for="title">Заголовок</label>
-                        <input type="text" class="form-control" id="title" name="title" value="{{$blogCategory->title}}" autocomplete="off" required>
+                        <input type="text" class="form-control" id="title" name="title" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
                     <label for="slug">Идентификатор</label>
-                        <input type="text" class="form-control" id="slug" name="slug" value="{{$blogCategory->slug}}" autocomplete="off">
+                        <input type="text" class="form-control" id="slug" name="slug" autocomplete="off">
                 </div>
 
                 <div class="form-group">
                     <label for="parent_id">Родитель</label>
                     <select name="parent_id" id="parent_id" class="form-control" required>
                         @foreach($categoryList as $categoryOption)
-                            <option value="{{$categoryOption->id}}"
-                                @if($blogCategory->parent_id===$categoryOption->id) selected @endif>
+                            <option value="{{$categoryOption->id}}">
                                 {{$categoryOption->title}}
                             </option>
                          @endforeach
@@ -66,7 +65,7 @@
 
                 <div class="form-group">
                     <label for="description">Описание</label>
-                    <textarea name="description" id="description" class="form-control">{{old('description',$blogCategory->description)}}</textarea>
+                    <textarea name="description" id="description" class="form-control">{{old('description',' ')}}</textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-dark" type="submit">Save</button>

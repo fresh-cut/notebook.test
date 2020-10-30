@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Blog\Admin;
 
 use App\Http\Requests\BlogCategoryUpdateRequest;
+use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Models\BlogCategory;
+use Database\Seeders\BlogPostSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -30,7 +32,8 @@ class CategoryController extends BaseController
      */
     public function create()
     {
-        var_dump('ok');
+        $categoryList=BlogCategory::all('id', 'title');
+        return view('blog.admin.categories.create', compact('categoryList'));
     }
 
     /**
@@ -39,9 +42,30 @@ class CategoryController extends BaseController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogCategoryCreateRequest $request, BlogCategory $blogCategory)
     {
+        $result=$blogCategory
+            ->fill($request->all())
+            ->save();//массовое сохранение(присвоение
+
         //
+        // альтернатива тому что сверху
+        // $data=$request->all();
+        //$result=new BlogCategory($data);
+        //
+
+        if($result)
+        {
+            return redirect()
+                ->route('blog.admin.categories.edit', $blogCategory->id)
+                ->with(['success'=>'Успешно сохранено']);
+        }
+        else{
+            return back()
+                ->withErrors(['msg'=>'Ошибка сохранения'])
+                ->withInput();
+        }
+
     }
 
 
@@ -54,9 +78,9 @@ class CategoryController extends BaseController
     public function edit($id)
     {
         $blogCategory=BlogCategory::findOrFail($id);
-        $categotyList=BlogCategory::all('id', 'title');
+        $categoryList=BlogCategory::all('id', 'title');
         //dd($blogParent);
-        return view('blog.admin.categories.edit', compact('blogCategory', 'categotyList'));
+        return view('blog.admin.categories.edit', compact('blogCategory', 'categoryList'));
     }
 
     /**
