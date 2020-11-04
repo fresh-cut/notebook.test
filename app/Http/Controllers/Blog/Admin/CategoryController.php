@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blog\Admin;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Models\BlogCategory;
+use App\Repositories\BlogCategoryRepository;
 use Database\Seeders\BlogPostSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +22,6 @@ class CategoryController extends BaseController
     public function index()
     {
         $blogCategories=BlogCategory::paginate(6);
-       // dd($categories);
         return view('blog.admin.categories.index', compact('blogCategories'));
     }
 
@@ -68,18 +68,19 @@ class CategoryController extends BaseController
 
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, BlogCategoryRepository $categoryRepository)
     {
-        $blogCategory=BlogCategory::findOrFail($id);
-        $categoryList=BlogCategory::all('id', 'title');
-        //dd($blogParent);
+        $blogCategory=$categoryRepository->getEdit($id); // получить запись для редактирования
+        if(empty($blogCategory)) {
+            abort(404);
+        }
+        $categoryList=$categoryRepository->getForComboBox(['id', 'title']); // получить для выпадающего списка
         return view('blog.admin.categories.edit', compact('blogCategory', 'categoryList'));
     }
 
