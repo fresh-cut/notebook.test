@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Blog;
+namespace App\Http\Controllers\Blog\Admin;
 
-
-use App\Models\BlogPost;
 
 use App\Repositories\BlogPostRepository;
-use Faker\Provider\Base;
 use Illuminate\Http\Request;
-
 
 class PostController extends BaseController
 {
-    protected $blogPostRepository;
+    private $blogPostRepository;
     public function __construct()
     {
         parent::__construct();
@@ -27,9 +23,10 @@ class PostController extends BaseController
     public function index()
     {
         $posts = $this->blogPostRepository->getAllWithPaginate();
-        //dd($posts, $posts->count());
-        return view('blog.posts.index', compact('posts'));
+//        dd($posts)
+        return view('blog.admin.posts.index', compact('posts'));
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +34,7 @@ class PostController extends BaseController
      */
     public function create()
     {
-        return view('blog.posts.create');
+        //
     }
 
     /**
@@ -46,10 +43,9 @@ class PostController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, BlogPost $post)
+    public function store(Request $request)
     {
-        $post->create($request->all());
-        return redirect()->route('blog.posts.index');
+        //
     }
 
     /**
@@ -60,8 +56,7 @@ class PostController extends BaseController
      */
     public function show($id)
     {
-        $post= BlogPost::where('id', $id)->first();
-        return view('blog.posts.show', compact('post') );
+        //
     }
 
     /**
@@ -72,9 +67,7 @@ class PostController extends BaseController
      */
     public function edit($id)
     {
-
-        $post= $this->blogPostRepository->getEdit($id);
-        return view('blog.posts.edit', compact('post'));
+        //
     }
 
     /**
@@ -86,9 +79,7 @@ class PostController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $post=$this->blogPostRepository->getedit($id);
-        $post->update($request->all());
-        return redirect()->route('blog.posts.index');
+        //
     }
 
     /**
@@ -99,8 +90,6 @@ class PostController extends BaseController
      */
     public function destroy($id)
     {
-        BlogPost::destroy($id);
-        return redirect()->route('blog.posts.index');
+        //
     }
 }
-

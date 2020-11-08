@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\BlogCategory as Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class BlogCategoryRepository extends CoreRepository
 {
@@ -28,9 +29,31 @@ class BlogCategoryRepository extends CoreRepository
      * @param $params
      * @return Collection
      */
-    public function getForComboBox($params)
+    public function getForComboBox()
     {
-        return $this->startConditions()->all($params);
+        $fields=implode(', ', [
+            'id',
+            'CONCAT (id, ".", title) AS id_title'
+        ]);
+        $result = $this->startConditions()
+            ->selectRaw($fields) // что бы использовать уже готовое SQL-выражение в вашем запросе
+            ->toBase() // не нужно агригировать полученые данные в обьект блогкатегории, создает просто колекции
+            ->get();
+        return $result;
     }
+
+    /**
+     * Получить категории для вывода пагинатором
+     *
+     * @param $count
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getAllWithPaginate($count)
+    {
+        $fields=['id', 'title', 'parent_id'];
+        return $this->startConditions()
+            ->paginate($count, $fields); // выбираем только те поля которые нам нужны
+    }
+
 
 }

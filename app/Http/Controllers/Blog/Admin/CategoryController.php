@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Blog\Admin;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Models\BlogCategory;
+use App\Models\BlogPost;
 use App\Repositories\BlogCategoryRepository;
-use Database\Seeders\BlogPostSeeder;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 class CategoryController extends BaseController
 {
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +25,9 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $blogCategories=BlogCategory::paginate(6);
+//        $posts=BlogCategory::find(2)->posts;
+//        dd($posts);
+        $blogCategories=$this->blogCategoryRepository->getAllWithPaginate(6);
         return view('blog.admin.categories.index', compact('blogCategories'));
     }
 
@@ -32,7 +38,7 @@ class CategoryController extends BaseController
      */
     public function create()
     {
-        $categoryList=BlogCategory::all('id', 'title');
+        $categoryList=$this->blogCategoryRepository->getForComboBox();
         return view('blog.admin.categories.create', compact('categoryList'));
     }
 
@@ -42,7 +48,7 @@ class CategoryController extends BaseController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BlogCategoryCreateRequest $request, BlogCategory $blogCategory)
+    public function store(BlogCategoryCreateRequest $request, BlogCategory$blogCategory)
     {
         $result=$blogCategory
             ->fill($request->all())
@@ -53,7 +59,7 @@ class CategoryController extends BaseController
         // $data=$request->all();
         //$result=new BlogCategory($data);
         //
-
+        //dd($blogCategory, $this->blogCategoryRepository);
         if($result)
         {
             return redirect()
@@ -74,14 +80,14 @@ class CategoryController extends BaseController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, BlogCategoryRepository $categoryRepository)
+    public function edit($id)
     {
-        $blogCategory=$categoryRepository->getEdit($id); // получить запись для редактирования
-        if(empty($blogCategory)) {
+        $item=$this->blogCategoryRepository->getEdit($id); // получить запись для редактирования
+        if(empty($item)) {
             abort(404);
         }
-        $categoryList=$categoryRepository->getForComboBox(['id', 'title']); // получить для выпадающего списка
-        return view('blog.admin.categories.edit', compact('blogCategory', 'categoryList'));
+        $categoryList=$this->blogCategoryRepository->getForComboBox(); // получить для выпадающего списка
+        return view('blog.admin.categories.edit', compact('item', 'categoryList'));
     }
 
     /**
@@ -93,14 +99,14 @@ class CategoryController extends BaseController
      */
     public function update(BlogCategoryUpdateRequest $request, $id)
     {
-        $blogCategory=BlogCategory::find($id);
-        if(empty($blogCategory))
+        $item=$this->blogCategoryRepository->getEdit($id);
+        if(empty($item))
         {
             return back()
                 ->withErrors(['msg'=>"Запись id=$id  не найдена"])
                 ->withInput();//вернуть с веденными данными - нужна в виде функция old()
         }
-         $result=$blogCategory->fill($request->all())->save();//массовое сохранение(присвоение
+         $result=$item->fill($request->all())->save();//массовое сохранение(присвоение или можно $item->update($request->all())
         if($result)
         {
             return redirect()

@@ -22,9 +22,13 @@
                 @csrf
                 <div class="form-group">
                     <input type="text" class="form-control" name="title" autocomplete="off" placeholder="напишите название для заметки">
+                    <input type="hidden" name='category_id' value="2">
+                    <input type="hidden" name='user_id' value="2">
+                    <input type="hidden" name='slug' value="odio-raesentium-voluptas-rem-a-nesciunt-nihil-omnis-optio">
+                    <input type="hidden" name='content_html' value="odio-praestium-voluptas-rem-a-nesciunt-nihil-omnis-optio">
                 </div>
                 <div class="form-group">
-                    <textarea name="bodytext" class="form-control" placeholder="о чем вы думаете?"></textarea>
+                    <textarea name="content_raw" class="form-control" placeholder="о чем вы думаете?"></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-success" type="submit" >Submit</button>

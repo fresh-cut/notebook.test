@@ -18,14 +18,14 @@
         </div>
         <div class="col-9">
             <h1>Edit tasks</h1>
-            <form action="{{ route('blog.posts.update', ['post'=>$post['id']]) }}" method="post">
+            <form action="{{ route('blog.posts.update', ['post'=>$post->id]) }}" method="post">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">
-                    <input type="text" class="form-control" name="title" value="<?=$post['title']?>" autocomplete="off">
+                    <input type="text" class="form-control" name="title" value="{{$post->title}}" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <textarea name="bodytext" class="form-control"><?=$post['bodytext']?></textarea>
+                    <textarea name="content_raw" class="form-control">{{$post->content_raw}}</textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-dark" type="submit">Save</button>

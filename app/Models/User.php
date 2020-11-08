@@ -57,4 +57,11 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function posts()
+    {
+        // по умолчанию функция бы искала столбец blog_category_id,
+        // но у нас он называется category_id, поэтому указываем его вторым параметром
+        return $this->hasMany(BlogPost::class, 'user_id');
+    }
 }

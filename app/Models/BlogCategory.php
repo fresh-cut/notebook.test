@@ -26,5 +26,13 @@ class BlogCategory extends Model
                 $blogCategory->slug=Str::slug($blogCategory->title);
             }
         });
-}
+    }
+
+    public function posts()
+    {
+        // у этой категории есть несколько статей
+        // по умолчанию функция бы искала столбец blog_category_id,
+        // но у нас он называется category_id, поэтому указываем его вторым параметром
+        return $this->hasMany(BlogPost::class, 'category_id');
+    }
 }

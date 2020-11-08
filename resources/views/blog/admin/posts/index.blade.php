@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{asset('css/css/app.css')}}">
     <meta charset="UTF-8">
-    <title>Categories</title>
+    <title>Posts</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 </head>
 <body>
@@ -17,39 +17,46 @@
             </ul>
         </div>
         <div class="col-9">
-            <h1>All categories</h1>
+            <h1>All posts</h1>
             <nav>
-                <a href="{{ route('blog.admin.categories.create') }}" class="btn btn-success">Add categories</a>
+                <a href="{{ route('blog.admin.posts.create') }}" class="btn btn-success">Написать</a>
             </nav>
             <br>
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
-                <tr style="text-align: center">
+                <tr>
                     <th>#</th>
+                    <th>Автор</th>
                     <th>Категория</th>
-                    <th>Родитель</th>
+                    <th>Заголовок</th>
+                    <th>Дата публикации</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($blogCategories as $blogCategory)
-                <tr>
-                   <td align="center">{{$blogCategory->id}}</td>
-                   <td align="center">
-                       <a href="{{ route('blog.admin.categories.edit',$blogCategory->id) }}">
-                           {{$blogCategory->title}}
+                @foreach($posts as $post)
+                    @php
+                    /** @var \App\Models\BlogPost $post */
+                    @endphp
+                <tr @if(!$post->is_published) style="background-color: #ccc" @endif>
+                   <td>{{ $post->id }}</td>
+                   <td>{{ $post->user->name }}</td>
+                   <td>{{ $post->category->title }}</td>
+                   <td >
+                       <a href="{{ route('blog.admin.categories.edit',$post->id) }}">
+                           {{$post->title}}
                        </a>
                    </td>
-                   <td align="center">{{$blogCategory->parent_id}}</td>
+                   <td>{{$post->is_published ? \Carbon\Carbon::parse($post->published_at)->format('d.M H:i') : ''}}</td>
                 </tr>
                 @endforeach
                 </tbody>
             </table>
-            @if($blogCategories->total() > $blogCategories->count() )
+            @if($posts->total() > $posts->count() )
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            {{ $blogCategories->links() }}
+                            {{ $posts->links() }}
                         </div>
                     </div>
                 </div>

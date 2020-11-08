@@ -31,10 +31,16 @@ Route::group(['namespace'=>'\App\Http\Controllers\Blog','prefix'=>'blog'], funct
 // Админка Блога
 $groupData=[
     'namespace'=>'\App\Http\Controllers\Blog\Admin',
-    'prefix'=>'admin/blog',
+    'prefix'=>'admin/blog', // то что будет в строке url после имени сайта
 ];
 Route::group($groupData, function(){
+    // BlogCategory
     $methods=['index', 'edit', 'store','update', 'create'];
     Route::resource('categories', 'CategoryController')->only($methods)
         ->names('blog.admin.categories');
+
+    // BlogPost
+    Route::resource('posts', 'PostController')
+        ->except('show') // все ресурсные маршруты кроме show
+        ->names('blog.admin.posts');
 });

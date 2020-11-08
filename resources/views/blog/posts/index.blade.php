@@ -47,6 +47,17 @@
                 <?php endforeach;?>
                 </tbody>
             </table>
+            @if($posts->total() > $posts->count() )
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {{ $posts->links() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>

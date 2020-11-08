@@ -12,7 +12,7 @@
         <div class="col-3 sidebar">
             <ul class="sidebar-menu list-unstyled">
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="{{ route('blog.admin.categories.index') }}">Категории</a></li>
-                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="{{ route('blog.admin.posts.index') }}">Посты</a></li>
+                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#2">2</a></li>
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#3">3</a></li>
             </ul>
         </div>
