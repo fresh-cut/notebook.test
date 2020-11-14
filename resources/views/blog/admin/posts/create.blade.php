@@ -39,7 +39,7 @@
             @endif
 
 
-            <form action="{{ route('blog.admin.categories.store') }}" method="post">
+            <form action="{{ route('blog.admin.posts.store') }}" method="post">
                 @csrf
                 @method('POST')
                 <div class="form-group">

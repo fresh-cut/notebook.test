@@ -42,7 +42,7 @@
                    <td>{{ $post->user->name }}</td>
                    <td>{{ $post->category->title }}</td>
                    <td >
-                       <a href="{{ route('blog.admin.categories.edit',$post->id) }}">
+                       <a href="{{ route('blog.admin.posts.edit',$post->id) }}">
                            {{$post->title}}
                        </a>
                    </td>

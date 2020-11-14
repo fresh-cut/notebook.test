@@ -38,6 +38,14 @@ class BlogPostRepository extends CoreRepository
         return $result;
     }
 
+
+    /**
+     * Получить данные для редактирования в админке
+     *
+     * @param $id
+     *
+     * @return \App\Models\BlogPost
+     */
     public function getEdit($id)
     {
         return $this->startConditions()->find($id); // findOrFail лучше не деать в недрах кода, лучше всего в контроллерах

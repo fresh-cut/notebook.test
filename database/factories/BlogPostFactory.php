@@ -28,13 +28,13 @@ class BlogPostFactory extends Factory
         $createdAt=$this->faker->dateTimeBetween('-3 months', '-2 days');
 
         return [
-            'category_id'=>rand(1,10),
-            'user_id'=>(rand(1,5)==5)?1:2,
-            'title'=>$title,
-            'slug'=>Str::slug($title),
-            'excerpt'=>$this->faker->text(rand(40,100)),
-            'content_raw'=>$txt,
-            'content_html'=>$txt,
+            'category_id'=>rand(1,10), // ид категории которой принадлежит пост
+            'user_id'=>(rand(1,5)==5)?1:2, // ид автора
+            'title'=>$title, // название поста
+            'slug'=>Str::slug($title), //название поста в транслите, уникальный.по нему будут строится url
+            'excerpt'=>$this->faker->text(rand(40,100)), // выдержка из статьи(кусочек статьи)
+            'content_raw'=>$txt, // сырой контент при сохранении нужно передалть в html
+            'content_html'=>$txt, // html контент, именно он показывается на странице (read only)
             'is_published'=>$isPublished,
             'published_at'=>$isPublished?$this->faker->dateTimeBetween('-2 months', '-1 days'):null,
             'created_at'=>$createdAt,

@@ -25,8 +25,6 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-//        $posts=BlogCategory::find(2)->posts;
-//        dd($posts);
         $blogCategories=$this->blogCategoryRepository->getAllWithPaginate(6);
         return view('blog.admin.categories.index', compact('blogCategories'));
     }
@@ -48,16 +46,15 @@ class CategoryController extends BaseController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BlogCategoryCreateRequest $request, BlogCategory$blogCategory)
+    public function store(BlogCategoryCreateRequest $request, BlogCategory $blogCategory)
     {
         $result=$blogCategory
-            ->fill($request->all())
-            ->save();//массовое сохранение(присвоение
-
+            ->fill($request->all())->save();//массовое сохранение(присвоение)
         //
         // альтернатива тому что сверху
-        // $data=$request->all();
-        //$result=new BlogCategory($data);
+//         $data=$request->all();
+//        $result=new BlogCategory($data);
+//        dd($result);
         //
         //dd($blogCategory, $this->blogCategoryRepository);
         if($result)
