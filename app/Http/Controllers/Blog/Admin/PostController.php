@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Blog\Admin;
 
 
+use App\Http\Requests\BlogPostCreateRequest;
+use App\Http\Requests\BlogPostUpdateRequest;
+use App\Models\BlogPost;
 use App\Repositories\BlogCategoryRepository;
 use App\Repositories\BlogPostRepository;
 use Illuminate\Http\Request;
@@ -34,22 +37,34 @@ class PostController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        $categoryList=$this->blogCategoryRepository->getForComboBox();
+        return view('blog.admin.posts.create', compact('categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  BlogPostCreateRequest  $request
+     * @param  BlogPost $blogPost
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(BlogPostCreateRequest $request, BlogPost $blogPost)
     {
-        //
+        $result=$blogPost->fill($request->all())->save();
+        if($result) {
+            return redirect()
+                ->route('blog.admin.posts.edit',$blogPost->id)
+                ->with(['success'=>'Успешно сохранено']);
+        }
+        else {
+            return back()
+                ->withErrors(['msg'=>'Ошибка сохранения'])
+                ->withInput();
+        }
     }
 
     /**
@@ -86,8 +101,9 @@ class PostController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BlogPostUpdateRequest $request, $id)
     {
+        //dd($request->all());
         $item=$this->blogPostRepository->getEdit($id);
         if(empty($item))
         {

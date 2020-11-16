@@ -14,11 +14,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                @if($item->is_published)
-                    Опубликовано
-                @else
-                    Черновик
-                    @endif
+                Черновик
             </div>
             <div class="card-body">
                 <div class="card-title"></div>
@@ -36,11 +32,11 @@
                     <div class="tab-pane active" id="maindata" role="tabpanel" aria-labelledby="maindata-tab">
                         <div class="form-group">
                             <label for="title">Заголовок</label>
-                            <input type="text" class="form-control" required name="title" id="title" value="{{ old('title', $item->title)}}">
+                            <input type="text" class="form-control" required name="title" id="title" value="{{ old('title', '')}}">
                         </div>
                         <div class="form-group">
                             <label for="content_raw">Статья</label>
-                            <textarea name="content_raw" id="content_raw" class="form-control" cols="30" rows="10">{{ old('content_raw', $item->content_raw) }}</textarea>
+                            <textarea name="content_raw" id="content_raw" class="form-control" cols="30" rows="10">{{ old('content_raw', '') }}</textarea>
                         </div>
                     </div>
                     <div class="tab-pane" id="adddata" role="tabpanel" aria-labelledby="adddata-tab">
@@ -48,7 +44,7 @@
                             <label for="category_id">Категория</label>
                             <select name="category_id" id="" class="form-control">
                                 @foreach( $categoryList as $category)
-                                    <option value="{{ $category->id }}" @if( $category->id == $item->category_id) selected @endif">
+                                    <option value="{{ $category->id }}">
                                         {{ $category->id_title }}
                                     </option>
                                 @endforeach
@@ -56,18 +52,18 @@
                         </div>
                         <div class="form-group">
                             <label for="slug">Идентификатор</label>
-                            <input type="text" class="form-control" name="slug" value="{{ $item->slug }}">
+                            <input type="text" class="form-control" name="slug" value="">
                         </div>
                         <div class="form-group">
                             <label for="excerpt">Выдержка</label>
-                            <textarea name="excerpt" class="form-control" cols="30" rows="10" > {{ old('excerpt', $item->excerpt) }}</textarea>
+                            <textarea name="excerpt" class="form-control" cols="30" rows="10" > {{ old('excerpt', '') }}</textarea>
                         </div>
                         <div class="form-check">
                             <input name="is_published"
                                     type="hidden"
                                     value="0">
-                            <input type="checkbox" class="form-check-input" value="1" name="is_published" @if($item->is_published) checked @endif>
-                            <label for="is_published" class="form-check-label">Опубликовано</label>
+                            <input type="checkbox" class="form-check-input" value="1" name="is_published">
+                            <label for="is_published" class="form-check-label">Опубликовать</label>
                         </div>
                     </div>
                 </div>

@@ -14,13 +14,8 @@ class BlogCategory extends Model
     //при массовом сохранении игнорировать эти поля https://laravel.com/docs/5.8/eloquent#mass-assignment
     protected $guarded = ['_method', '_token'];
 
-    protected static function booted() { // события  https://laravel.com/docs/8.x/eloquent#events
-        static::updated(function($blogCategory){
-            if(empty($blogCategory->slug)){
-                $blogCategory->slug=Str::slug($blogCategory->title);
-            }
-        });
-    }
+   // protected static function booted() { // события  https://laravel.com/docs/8.x/eloquent#events
+   // }
 
     public function posts()
     {

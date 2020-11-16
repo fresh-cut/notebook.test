@@ -27,11 +27,11 @@
                     @csrf
                     @method('PATCH')
                     <div class="row justify-content-center">
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             @include('blog.admin.posts.includes.result_messages')
                             @include('blog.admin.posts.includes.post_edit_main_col') {{-- основной столбец --}}
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             @include('blog.admin.posts.includes.post_edit_add_col') {{-- дополнительный столбец--}}
                         </div>
                     </div>
@@ -40,14 +40,14 @@
                 @method('DELETE')
                 @csrf
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <div class="card card-block">
                             <div class="card-body ml-auto">
                                 <button type="submit" class="btn btn-link">удалить</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
+                    <div class="col-md-3"></div>
                 </div>
             </form>
 

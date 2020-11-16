@@ -9,14 +9,14 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3 sidebar">
+        <div class="col-2 sidebar">
             <ul class="sidebar-menu list-unstyled">
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="{{ route('blog.admin.categories.index') }}">Категории</a></li>
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="{{ route('blog.admin.posts.index') }}">Посты</a></li>
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="#3">Users</a></li>
             </ul>
         </div>
-        <div class="col-9">
+        <div class="col-10">
             <h1>All posts</h1>
             <nav>
                 <a href="{{ route('blog.admin.posts.create') }}" class="btn btn-success">Написать</a>
