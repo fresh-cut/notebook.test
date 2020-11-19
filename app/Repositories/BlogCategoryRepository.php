@@ -52,8 +52,7 @@ class BlogCategoryRepository extends CoreRepository
     {
         $fields=['id', 'title', 'parent_id'];
         return $this->startConditions()
+            ->with('parentCategory:id,title')
             ->paginate($count, $fields); // выбираем только те поля которые нам нужны
     }
-
-
 }

@@ -30,7 +30,7 @@ class PostController extends BaseController
     public function index()
     {
         $posts = $this->blogPostRepository->getAllWithPaginate();
-//        dd($posts)
+        //dd($posts);
         return view('blog.admin.posts.index', compact('posts'));
     }
 
@@ -129,10 +129,20 @@ class PostController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id, BlogPost $blogPost)
     {
-        dd(__METHOD__);
+        $result=$blogPost::destroy($id);
+        if($result)
+        {
+            return redirect()
+                ->route('blog.admin.posts.index');
+        }
+        else{
+            return back()
+                ->withErrors(['msg'=>'Ошибка удаления'])
+                ->withInput();
+        }
     }
 }

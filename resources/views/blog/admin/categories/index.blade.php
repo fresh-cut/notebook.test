@@ -39,7 +39,9 @@
                            {{$blogCategory->title}}
                        </a>
                    </td>
-                   <td align="center">{{$blogCategory->parent_id}}</td>
+                   <td align="center" @if (in_array($blogCategory->parent_id, [0,1])) style="color: #c0c0c0"@endif>
+                       {{ $blogCategory->parentTitle }}
+                   </td>
                 </tr>
                 @endforeach
                 </tbody>
